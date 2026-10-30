@@ -16,13 +16,11 @@ public class GameFacade : MonoBehaviour
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public void StartGame()
     {
         audioManager.PlayAudio();
         uiManager.ShowUI();
-        uiManager.ResetScore();
     }
 }

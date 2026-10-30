@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class Player : MonoBehaviour
     bool isJump;
     bool onGround;
     Rigidbody rb;
+    public int score;
+    public event Action<int> OnAddScore;
 
     void Start()
     {
@@ -60,5 +64,25 @@ public class Player : MonoBehaviour
         {
             onGround = true;
         }
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (!onGround)
+            {
+                Destroy(collision.gameObject);
+                AddScore(score);
+            }
+            else
+            {
+                SceneManager.LoadScene("MenuScene");
+            }
+        }
+    }
+
+    void AddScore(int add)
+    {
+        add = 1;
+        score += add;
+        OnAddScore?.Invoke(score);
     }
 }
